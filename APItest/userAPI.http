@@ -1,0 +1,32 @@
+@host=http://localhost:3000
+
+# @name WolfKillerHomePage
+GET {{host}} HTTP/1.1
+
+###
+# @name WolfKillerUserInfo
+
+GET {{host}}/user HTTP/1.1
+
+
+
+###
+# @name WolfKillerUserLogin
+POST {{host}}/user/login HTTP/1.1
+Content-Type: application/json;
+Cookie: auth=0092f7d3a58c877df398283abea48726
+
+{
+    "firstName": "yang",
+    "lastName": "add",
+    "email": "65656@qq.com",
+    "password": "Aa123456",
+    "agreeTerms": false,
+    "loyalty": true
+}
+
+### 
+
+# @name WolfKillerUserLogOut
+
+GET {{host}}/logout HTTP/1.1
