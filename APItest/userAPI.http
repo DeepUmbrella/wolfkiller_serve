@@ -10,11 +10,13 @@ GET {{host}}/user HTTP/1.1
 
 
 
+
+###
+GET  {{host}}/user/login HTTP/1.1
 ###
 # @name WolfKillerUserLogin
 POST {{host}}/user/login HTTP/1.1
 Content-Type: application/json;
-Cookie: auth=0092f7d3a58c877df398283abea48726
 
 {
     "firstName": "yang",
@@ -25,8 +27,12 @@ Cookie: auth=0092f7d3a58c877df398283abea48726
     "loyalty": true
 }
 
+
+@auth = {{WolfKillerUserLogin.response.headers}}
+
 ### 
 
 # @name WolfKillerUserLogOut
 
-GET {{host}}/logout HTTP/1.1
+GET {{host}}/user/logout HTTP/1.1
+Cookie: auth=0092f7d3a58c877df398283abea48726
