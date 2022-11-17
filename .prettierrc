@@ -4,5 +4,7 @@
   "semi": true,
   "tabWidth": 2,
   "bracketSpacing": true,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "proseWrap": "preserve",
+  "printWidth": 80
 }

@@ -11,6 +11,7 @@ GET {{host}}/user HTTP/1.1
 
 
 
+
 ###
 GET  {{host}}/user/login HTTP/1.1
 
@@ -47,3 +48,15 @@ POST {{host}}/user/filter HTTP/1.1
 {
     "id":1650
 }
+
+###
+GET {{host}}/admin/filter HTTP/1.1
+###
+
+###
+Post {{host}}/admin/filter HTTP/1.1
+
+{
+    "acess_token":"0092f7d3a58c877df398283abea48726"
+}
+###

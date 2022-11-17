@@ -7,18 +7,24 @@ import {
 
 import { Response, Request } from 'express';
 
+type HttpErrorMessage = {
+  errorMessage?: string;
+};
+
 @Catch()
-export class HttpExceptionFilterFilter<T> implements ExceptionFilter {
-  catch(exception: T, host: ArgumentsHost) {
+export class HttpExceptionFilterFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    // const status = exception.getStatus();
-    console.log(exception, '123');
-    response.status(403).json({
-      statusCode: 403,
+    const status = exception.getStatus();
+    const httpResponse: HttpErrorMessage = exception.getResponse() as Object;
+
+    response.status(status).json({
+      statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
+      ...httpResponse,
     });
   }
 }

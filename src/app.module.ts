@@ -1,13 +1,11 @@
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserController } from './modules/user/user.controller';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { RoleGuardModule } from './modules/role-guard/role-guard.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController, UserController],
-  providers: [AppService],
+  imports: [RoleGuardModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -7,13 +7,14 @@ import {
   Post,
   Body,
   Header,
-  Headers,
   ForbiddenException,
   UseFilters,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 
 import { Request, Response } from 'express';
+
 import { HttpExceptionFilterFilter } from 'src/common/http-exception-filter';
 
 @Controller('user')
@@ -65,8 +66,13 @@ export class UserController {
   }
 
   @Post('filter')
-  @UseFilters(new HttpExceptionFilterFilter<HttpException>())
-  async create(@Body() Body) {
-    throw new ForbiddenException();
+  @UseFilters(new HttpExceptionFilterFilter())
+  async create(@Body() body) {
+    throw new HttpException(
+      {
+        errorMessage: 'This service is updating ,we will be back 3:00AM-5:00AM',
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 }
