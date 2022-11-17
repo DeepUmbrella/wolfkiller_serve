@@ -8,9 +8,13 @@ import {
   Body,
   Header,
   Headers,
+  ForbiddenException,
+  UseFilters,
+  HttpException,
 } from '@nestjs/common';
 
 import { Request, Response } from 'express';
+import { HttpExceptionFilterFilter } from 'src/common/http-exception-filter';
 
 @Controller('user')
 export class UserController {
@@ -42,7 +46,9 @@ export class UserController {
 
   @Post('createaccount')
   @Header('Content-Type', 'application/json;charset=utf-8')
-  userCreateAccount(req, @Res({ passthrough: true }) res: Response) {}
+  userCreateAccount(req, @Res({ passthrough: true }) res: Response) {
+    return 'success';
+  }
 
   @Get('logout')
   @Header('Content-Type', 'application/json;charset=utf-8')
@@ -56,5 +62,11 @@ export class UserController {
         .json({ code: 200, message: 'logout fail ,you do not login!' });
     }
     res.end();
+  }
+
+  @Post('filter')
+  @UseFilters(new HttpExceptionFilterFilter<HttpException>())
+  async create(@Body() Body) {
+    throw new ForbiddenException();
   }
 }
