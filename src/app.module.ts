@@ -8,6 +8,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({

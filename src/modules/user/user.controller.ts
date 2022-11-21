@@ -11,14 +11,19 @@ import {
   UseFilters,
   HttpException,
   HttpStatus,
+  Headers,
 } from '@nestjs/common';
 
 import { Request, Response } from 'express';
+import { UserService } from './user.service';
 
 import { HttpExceptionFilterFilter } from 'src/common/http-exception-filter';
+import { Session } from '@nestjs/common/decorators';
 
 @Controller('user')
 export class UserController {
+  constructor(private readonly userService: UserService) {}
+
   @Get()
   @HttpCode(200)
   @Header('Content-Type', 'application/json;charset=utf-8')
@@ -35,14 +40,22 @@ export class UserController {
     res.status(200).send(`{ "name": "yanglin", "age": 19 }`).end();
   }
 
-  @Get('login')
+  @Post('login')
   @Header('Content-Type', 'application/json;charset=utf-8')
-  @Header(
-    'set-cookie',
-    'auth=0092f7d3a58c877df398283abea48726;path=/;domain=localhost;Max-Age=300;httponly',
-  )
-  userLogin(req, @Res({ passthrough: true }) res: Response) {
-    res.end();
+  userLogin(
+    @Body('validate') vlidate: string,
+    @Session() session: { code: string },
+    @Res({ passthrough: true }) res,
+  ) {
+    console.log(Body, session);
+    const ispass = vlidate?.toLowerCase() === session.code.toLowerCase();
+    res
+      .status(ispass ? 200 : 401)
+      .json({
+        code: ispass ? 200 : 401,
+        message: ispass ? 'pass' : 'reject',
+      })
+      .end();
   }
 
   @Post('createaccount')
@@ -74,5 +87,13 @@ export class UserController {
       },
       HttpStatus.FORBIDDEN,
     );
+  }
+
+  @Get('captcha')
+  @Header('content-type', 'image/svg+xml')
+  createCaptch(@Headers('_auth') auth, @Session() session) {
+    console.log(session);
+    const captch = this.userService.createCaptcha(auth, session);
+    return captch;
   }
 }
