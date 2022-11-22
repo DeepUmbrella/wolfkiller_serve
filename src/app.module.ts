@@ -7,6 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import { UploadModule } from './modules/upload/upload.module';
 
 
 @Module({
@@ -32,6 +33,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
         },
       }),
     }),
+    UploadModule,
   ],
   controllers: [],
   providers: [],

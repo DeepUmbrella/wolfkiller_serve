@@ -6,7 +6,7 @@ const captchaConfig = {
   fontSize: 50,
   with: 100,
   height: 34,
-  background: 'rgb(119, 98, 6)',
+  background: '#fafafa',
 };
 
 @Injectable()
