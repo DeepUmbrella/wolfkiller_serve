@@ -1,26 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUploadDto } from './dto/create-upload.dto';
 import { UpdateUploadDto } from './dto/update-upload.dto';
-
+import { zip } from 'compressing';
+import { resolve } from 'path';
 @Injectable()
 export class UploadService {
   upLoadSigleFile(createUploadDto: CreateUploadDto) {
-    return 'This action adds a new upload';
+    return 'this will be succussful';
+  }
+  downloadByLink(): string {
+    return resolve(__dirname, '../../images/1669133668854.jpg');
   }
 
-  findAll() {
-    return `This action returns all upload`;
-  }
+  async downloadByStream(res) {
+    const url = resolve(__dirname, '../../images/1669133668854.jpg');
 
-  findOne(id: number) {
-    return `This action returns a #${id} upload`;
-  }
+    const tarStream = new zip.Stream();
 
-  update(id: number, updateUploadDto: UpdateUploadDto) {
-    return `This action updates a #${id} upload`;
-  }
+    await tarStream.addEntry(url);
 
-  remove(id: number) {
-    return `This action removes a #${id} upload`;
+    tarStream.pipe(res);
   }
 }
