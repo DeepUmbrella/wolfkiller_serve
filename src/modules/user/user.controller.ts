@@ -42,14 +42,18 @@ export class UserController {
 
   @Post('login')
   @Header('Content-Type', 'application/json;charset=utf-8')
+  @Header('asdfadfasdfas', 'http://localhost:5173')
   userLogin(
     @Body('validate') vlidate: string,
     @Session() session: { code: string },
-    @Res({ passthrough: true }) res,
+    @Res({ passthrough: true }) res: Response,
   ) {
     console.log(Body, session);
     const ispass = vlidate?.toLowerCase() === session.code.toLowerCase();
+
     res
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader('Access-Control-Allow-Credentials', 'true')
       .status(ispass ? 200 : 401)
       .json({
         code: ispass ? 200 : 401,

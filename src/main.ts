@@ -3,12 +3,15 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { resolve } from 'path';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useStaticAssets(resolve(__dirname, 'images'), {
     prefix: '/static',
   });
+
+  app.use(cookieParser());
   app.use(
     session({
       secret: 'linyan',
