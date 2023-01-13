@@ -8,10 +8,24 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { UploadModule } from './modules/upload/upload.module';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { prototype } from 'events';
+import { UserinfoModule } from './modules/userinfo/userinfo.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      username: 'root',
+      password: '926546Yl.',
+      host: '1.14.48.101',
+      port: 3306,
+      database: 'wkuserinfo',
+      synchronize: true,
+      retryDelay: 500,
+      retryAttempts: 10,
+      autoLoadEntities: true,
+    }),
     ConfigModule.forRoot({
       load: [],
     }),
@@ -34,6 +48,7 @@ import { UploadModule } from './modules/upload/upload.module';
       }),
     }),
     UploadModule,
+    UserinfoModule,
   ],
   controllers: [],
   providers: [],
