@@ -17,10 +17,9 @@ import { UserinfoModule } from './modules/userinfo/userinfo.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       username: 'root',
-      password: '926546Yl.',
-      host: '1.14.48.101',
-      port: 3306,
-      database: 'wkuserinfo',
+      
+      
+     
       synchronize: true,
       retryDelay: 500,
       retryAttempts: 10,
