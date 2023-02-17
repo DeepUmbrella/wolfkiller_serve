@@ -11,23 +11,28 @@ import { UploadModule } from './modules/upload/upload.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { prototype } from 'events';
 import { UserinfoModule } from './modules/userinfo/userinfo.module';
+import { configuration, DataBaseConfig } from './config/configuration';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      username: 'root',
-      
-      
-     
-      synchronize: true,
-      retryDelay: 500,
-      retryAttempts: 10,
-      autoLoadEntities: true,
-    }),
     ConfigModule.forRoot({
-      load: [],
+      load: [configuration],
+      isGlobal: true,
+      envFilePath: ['.env.development', '.env.production'],
     }),
+
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configServive: ConfigService<DataBaseConfig>) => ({
+        synchronize: true,
+        retryDelay: 500,
+        retryAttempts: 10,
+        autoLoadEntities: true,
+        ...configServive.get('database'),
+      }),
+      inject: [ConfigService],
+    }),
+
     RoleGuardModule,
     EmailModule,
     UserModule,
