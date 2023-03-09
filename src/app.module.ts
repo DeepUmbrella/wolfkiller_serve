@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { prototype } from 'events';
 import { UserinfoModule } from './modules/userinfo/userinfo.module';
 import { configuration, DataBaseConfig } from './config/configuration';
+import { AccountManagementModule } from './modules/account-management/account-management.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { configuration, DataBaseConfig } from './config/configuration';
     }),
     UploadModule,
     UserinfoModule,
+    AccountManagementModule,
   ],
   controllers: [],
   providers: [],
