@@ -16,9 +16,9 @@ import {
 
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
-
+import { AuthGuard } from '@nestjs/passport';
 import { HttpExceptionFilterFilter } from 'src/common/http-exception-filter';
-import { Session } from '@nestjs/common/decorators';
+import { Session, UseGuards } from '@nestjs/common';
 
 @Controller('user')
 export class UserController {
@@ -41,6 +41,7 @@ export class UserController {
   }
 
   @Post('login')
+  @UseGuards(AuthGuard('local'))
   @Header('Content-Type', 'application/json;charset=utf-8')
   @Header('asdfadfasdfas', 'http://localhost:5173')
   userLogin(

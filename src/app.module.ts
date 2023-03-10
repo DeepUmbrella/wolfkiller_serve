@@ -9,10 +9,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { UploadModule } from './modules/upload/upload.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { prototype } from 'events';
-import { UserinfoModule } from './modules/userinfo/userinfo.module';
 import { configuration, DataBaseConfig } from './config/configuration';
 import { AccountManagementModule } from './modules/account-management/account-management.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -53,8 +52,8 @@ import { AccountManagementModule } from './modules/account-management/account-ma
       }),
     }),
     UploadModule,
-    UserinfoModule,
     AccountManagementModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
