@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configuration, DataBaseConfig } from './config/configuration';
 import { AccountManagementModule } from './modules/account-management/account-management.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { AuthModule } from './modules/auth/auth.module';
     UploadModule,
     AccountManagementModule,
     AuthModule,
+    LoginModule,
   ],
   controllers: [],
   providers: [],

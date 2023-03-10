@@ -23,11 +23,9 @@ POST {{host}}/user/login HTTP/1.1
 Content-Type: application/json;
 
 {
-    "firstName": "yang",
-    "lastName": "add",
-    "email": "65656@qq.com",
-    "password": "Aa123456",
-    "agreeTerms": false,
+    "name": "zhangsan",
+    "password": "345dasf",
+    "telnumber": 135555555,
     "loyalty": true
 }
 

@@ -19,6 +19,7 @@ import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { HttpExceptionFilterFilter } from 'src/common/http-exception-filter';
 import { Session, UseGuards } from '@nestjs/common';
+import { LocalAuthGuard } from 'src/modules/auth/local-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -40,8 +41,8 @@ export class UserController {
     res.status(200).send(`{ "name": "yanglin", "age": 19 }`).end();
   }
 
+  // @UseGuards(LocalAuthGuard)
   @Post('login')
-  @UseGuards(AuthGuard('local'))
   @Header('Content-Type', 'application/json;charset=utf-8')
   @Header('asdfadfasdfas', 'http://localhost:5173')
   userLogin(
@@ -50,7 +51,7 @@ export class UserController {
     @Res({ passthrough: true }) res: Response,
   ) {
     console.log(Body, session);
-    const ispass = vlidate?.toLowerCase() === session.code.toLowerCase();
+    const ispass = vlidate?.toLowerCase() === session.code?.toLowerCase();
 
     res
       .setHeader('Access-Control-Allow-Origin', '*')
