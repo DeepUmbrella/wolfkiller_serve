@@ -1,3 +1,5 @@
+import { JwtModuleOptions } from '@nestjs/jwt';
+
 export type DataBaseConfig = {
   port: number;
   database: {
@@ -21,6 +23,16 @@ export const configuration = () => {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
     },
-    secret: process.env.ACCESSTOKEN_SECRET,
   };
 };
+export interface JwtConfig {
+  jwt_config: JwtModuleOptions;
+}
+export const jwtConfiguration = (): JwtConfig => ({
+  jwt_config: {
+    secret: process.env.ACCESSTOKEN_SECRET,
+    signOptions: {
+      expiresIn: '3600s',
+    },
+  },
+});

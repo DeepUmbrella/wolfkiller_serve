@@ -9,7 +9,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { UploadModule } from './modules/upload/upload.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { configuration, DataBaseConfig } from './config/configuration';
+import {
+  configuration,
+  DataBaseConfig,
+  jwtConfiguration,
+} from './config/configuration';
 import { AccountManagementModule } from './modules/account-management/account-management.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AccountModule } from './modules/account/account.module';
@@ -17,19 +21,19 @@ import { AccountModule } from './modules/account/account.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [configuration],
+      load: [configuration, jwtConfiguration],
       isGlobal: true,
       envFilePath: ['.development.env', '.production.env'],
     }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configServive: ConfigService<DataBaseConfig>) => ({
+      useFactory: (configService: ConfigService<DataBaseConfig>) => ({
         synchronize: true,
         retryDelay: 500,
         retryAttempts: 10,
         autoLoadEntities: true,
-        ...configServive.get('database'),
+        ...configService.get('database'),
       }),
       inject: [ConfigService],
     }),
