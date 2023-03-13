@@ -21,5 +21,6 @@ export const configuration = () => {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
     },
+    secret: process.env.ACCESSTOKEN_SECRET,
   };
 };

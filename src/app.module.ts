@@ -19,7 +19,7 @@ import { AccountModule } from './modules/account/account.module';
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
-      envFilePath: ['.env.development', '.env.production'],
+      envFilePath: ['.development.env', '.production.env'],
     }),
 
     TypeOrmModule.forRootAsync({
