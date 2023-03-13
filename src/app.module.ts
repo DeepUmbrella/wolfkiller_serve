@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configuration, DataBaseConfig } from './config/configuration';
 import { AccountManagementModule } from './modules/account-management/account-management.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { LoginModule } from './login/login.module';
+import { AccountModule } from './modules/account/account.module';
 
 @Module({
   imports: [
@@ -36,7 +36,7 @@ import { LoginModule } from './login/login.module';
 
     RoleGuardModule,
     EmailModule,
-    UserModule,
+
     MailerModule.forRootAsync({
       useFactory: () => ({
         transport: 'smtps://user@domain.com:pass@smtp.domain.com',
@@ -55,7 +55,8 @@ import { LoginModule } from './login/login.module';
     UploadModule,
     AccountManagementModule,
     AuthModule,
-    LoginModule,
+    UserModule,
+    AccountModule,
   ],
   controllers: [],
   providers: [],

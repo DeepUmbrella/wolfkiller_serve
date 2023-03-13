@@ -12,9 +12,10 @@ import {
   HttpException,
   HttpStatus,
   Headers,
+  Request,
 } from '@nestjs/common';
 
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { HttpExceptionFilterFilter } from 'src/common/http-exception-filter';
@@ -41,27 +42,11 @@ export class UserController {
     res.status(200).send(`{ "name": "yanglin", "age": 19 }`).end();
   }
 
-  // @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  @Header('Content-Type', 'application/json;charset=utf-8')
-  @Header('asdfadfasdfas', 'http://localhost:5173')
-  userLogin(
-    @Body('validate') vlidate: string,
-    @Session() session: { code: string },
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    console.log(Body, session);
-    const ispass = vlidate?.toLowerCase() === session.code?.toLowerCase();
-
-    res
-      .setHeader('Access-Control-Allow-Origin', '*')
-      .setHeader('Access-Control-Allow-Credentials', 'true')
-      .status(ispass ? 200 : 401)
-      .json({
-        code: ispass ? 200 : 401,
-        message: ispass ? 'pass' : 'reject',
-      })
-      .end();
+  async userLogin(@Request() req) {
+    console.log(req, 6666);
+    return req.user;
   }
 
   @Post('createaccount')
