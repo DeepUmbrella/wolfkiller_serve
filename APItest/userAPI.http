@@ -14,7 +14,7 @@ GET {{host}}/user HTTP/1.1
 
 ###
 GET  {{host}}/account/profile HTTP/1.1
-Authorization: Bearer {{access_token}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InpoYW5nc2FuIiwic3ViIjoxLCJpYXQiOjE2Nzg3NzM2MTYsImV4cCI6MTY3ODc3MzY3Nn0.waONlTf41wl1lILrd6OMNtNjCyKq5ccTVf4kH6fdakA
 
 ###
 # @name WolfKillerUserLogin
@@ -56,3 +56,5 @@ Post {{host}}/admin/filter HTTP/1.1
     "acess_token":"0092f7d3a58c877df398283abea48726"
 }
 ###
+
+POST {{host}}/management HTTP/1.1

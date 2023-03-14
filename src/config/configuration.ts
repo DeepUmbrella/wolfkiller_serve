@@ -32,7 +32,7 @@ export const jwtConfiguration = (): JwtConfig => ({
   jwt_config: {
     secret: process.env.ACCESSTOKEN_SECRET,
     signOptions: {
-      expiresIn: '3600s',
+      expiresIn: '60s',
     },
   },
 });

@@ -3,12 +3,6 @@ import { Controller, Get, Post } from '@nestjs/common';
 import { AccountManagementService } from './account-management.service';
 import { UserPermission } from '../userinfo/entities/userpermission.entity';
 
-function ReadHeader(paramenters: string): ParameterDecorator {
-  return (target: Object, propertyKey: string, parameterIndex: number) => {
-    console.log(target, propertyKey, parameterIndex);
-  };
-}
-
 @Controller('management')
 export class AccountManagementController {
   constructor(
@@ -16,7 +10,7 @@ export class AccountManagementController {
   ) {}
 
   @Post()
-  async getManageUserlist(@ReadHeader('') req, res) {
+  async getManageUserlist(req, res) {
     let manager = false;
     let level = 0;
     const [permission]: UserPermission[] =
