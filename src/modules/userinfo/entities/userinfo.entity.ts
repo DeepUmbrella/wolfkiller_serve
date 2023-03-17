@@ -25,6 +25,9 @@ export class Userinfo {
   @Column({ nullable: false })
   telnumber: number;
 
+  @Column({ type: 'varchar', length: 255 })
+  avatarUrl: string;
+
   @CreateDateColumn()
   createDate;
 }
