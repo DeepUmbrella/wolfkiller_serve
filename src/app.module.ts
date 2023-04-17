@@ -1,24 +1,16 @@
 import * as path from 'path';
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { RoleGuardModule } from './modules/role-guard/role-guard.module';
-import { EmailModule } from './modules/email/email.module';
-import { UserModule } from './modules/user/user.module';
+
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
-import { UploadModule } from './modules/upload/upload.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   configuration,
   DataBaseConfig,
   jwtConfiguration,
 } from './config/configuration';
-import { AccountManagementModule } from './modules/account-management/account-management.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { AccountModule } from './modules/account/account.module';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
+import { LoggerMiddleware } from './common/middleware';
 
 @Module({
   imports: [
@@ -40,9 +32,6 @@ import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
       inject: [ConfigService],
     }),
 
-    RoleGuardModule,
-    EmailModule,
-
     MailerModule.forRootAsync({
       useFactory: () => ({
         transport: 'smtps://user@domain.com:pass@smtp.domain.com',
@@ -58,25 +47,15 @@ import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
         },
       }),
     }),
-    UploadModule,
-    AccountManagementModule,
-    AuthModule,
-    UserModule,
-    AccountModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {
+  constructor() {
+    console.log(this, 'this');
+  }
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .exclude({ path: 'user', method: RequestMethod.GET })
-      .forRoutes('user');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }

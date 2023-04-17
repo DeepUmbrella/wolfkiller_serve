@@ -12,17 +12,17 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
-  app.use(
-    session({
-      secret: 'linyan',
-      rolling: true,
-      name: '_auth',
-      cookie: {
-        httpOnly: false,
-        maxAge: 99999,
-      },
-    }),
-  );
+  // app.use(
+  //   session({
+  //     secret: 'linyan',
+  //     rolling: true,
+  //     name: '_auth',
+  //     cookie: {
+  //       httpOnly: false,
+  //       maxAge: 99999,
+  //     },
+  //   }),
+  // );
   await app.listen(3000);
 }
 bootstrap();
