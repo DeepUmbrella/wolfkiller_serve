@@ -11,6 +11,7 @@ import {
   jwtConfiguration,
 } from './config/configuration';
 import { LoggerMiddleware } from './common/middleware';
+import { AccountModule } from './modules/account/account.module';
 
 @Module({
   imports: [
@@ -47,14 +48,12 @@ import { LoggerMiddleware } from './common/middleware';
         },
       }),
     }),
+    AccountModule,
   ],
   controllers: [],
   providers: [],
 })
 export class AppModule {
-  constructor() {
-    console.log(this, 'this');
-  }
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
   }
