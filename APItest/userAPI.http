@@ -6,7 +6,7 @@ GET {{host}} HTTP/1.1
 ###
 # @name WolfKillerUserInfo
 
-GET {{host}}/user HTTP/1.1
+GET http://localhost:5173 HTTP/1.1
 
 
 

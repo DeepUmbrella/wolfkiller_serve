@@ -10,6 +10,7 @@ import { ALLOW_KEY } from '../decorators/auth.decorator';
 import { Request } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
+import { Anonymous, ExpiredCert } from '../../constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -33,7 +34,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeaderCookie(request);
 
     if (!token) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(Anonymous.RES, Anonymous.DES);
     }
 
     try {
@@ -42,12 +43,12 @@ export class AuthGuard implements CanActivate {
       });
       request['user'] = payload;
     } catch {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(ExpiredCert.RES, ExpiredCert.DES);
     }
     return true;
   }
 
   private extractTokenFromHeaderCookie(request: Request): string | undefined {
-    return request.cookies?.access_token;
+    return request.cookies?.auth;
   }
 }
