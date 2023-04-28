@@ -11,7 +11,6 @@ export class AccountService {
   ) {}
   async signIn(username: string, pass: string) {
     const user = await this.usersService.findUserByName(username);
-
     if (user?.password !== pass) {
       throw new UnauthorizedException(SignFailed.RES, SignFailed.DES);
     }

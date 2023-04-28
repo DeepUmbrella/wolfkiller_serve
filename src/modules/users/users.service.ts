@@ -10,9 +10,9 @@ export class UsersService {
     private userinfoRepository: Repository<Userinfo>,
   ) {}
 
-  async findUserByName(username: string) {
+  async findUserByName(user_name: string) {
     return await this.userinfoRepository.findOne({
-      where: { user_name: username },
+      where: { user_name },
     });
   }
 }

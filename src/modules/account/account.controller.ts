@@ -10,22 +10,23 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { AuthGuard } from 'src/common/guards/auth.guard';
+import { AuthGuard } from '@guards/auth.guard';
 import { Response } from 'express';
-import { RegisterValidationPipe } from 'src/common/pipe/regiseter.pipe';
+
+import { SignInDto, SignUpDto } from './account.dto';
+import { SignInValidationPipe, SignUpValidationPipe } from '@pipe';
 
 @Controller('account')
 export class AccountController {
   constructor(private accountService: AccountService) {}
 
-  @HttpCode(200)
   @Post('login')
   async signIn(
-    @Body() signInDto: Record<string, any>,
+    @Body(SignInValidationPipe) signInDto: SignInDto,
     @Res({ passthrough: true }) res: Response,
   ) {
     const result = await this.accountService.signIn(
-      signInDto.username,
+      signInDto.user_name,
       signInDto.password,
     );
     res.cookie('auth', result.access_token, {
@@ -41,8 +42,7 @@ export class AccountController {
   }
 
   @Post('register')
-  @UsePipes(new RegisterValidationPipe())
-  signUp() {
+  signUp(@Body(SignUpValidationPipe) signUpDto: SignUpDto) {
     return {
       user_name: '6666',
     };
