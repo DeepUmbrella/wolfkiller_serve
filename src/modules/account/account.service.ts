@@ -38,4 +38,8 @@ export class AccountService {
       },
     };
   }
+
+  signUp(arg: any) {
+    return 1;
+  }
 }

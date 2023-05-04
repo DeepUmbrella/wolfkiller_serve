@@ -15,4 +15,14 @@ export class UsersService {
       where: { user_name },
     });
   }
+  async createSingleUser(user_name: string) {
+    return await this.userinfoRepository.findOne({
+      where: { user_name },
+    });
+  }
+  async createManyUsers(user_name: string) {
+    return await this.userinfoRepository.findOne({
+      where: { user_name },
+    });
+  }
 }

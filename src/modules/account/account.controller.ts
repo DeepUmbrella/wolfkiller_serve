@@ -35,7 +35,7 @@ export class AccountController {
     });
 
     return {
-      error_message: '',
+      message: '',
       error_code: 0,
       user_info: result.user_data,
     };
@@ -43,6 +43,7 @@ export class AccountController {
 
   @Post('register')
   signUp(@Body(SignUpValidationPipe) signUpDto: SignUpDto) {
+    this.accountService.signUp(signUpDto);
     return {
       user_name: '6666',
     };
@@ -53,7 +54,7 @@ export class AccountController {
   async profile(@Req() req) {
     const result = await this.accountService.profile(req?.user?.user_name);
     return {
-      error_message: '',
+      message: '',
       error_code: 0,
       user_info: result.user_data,
     };
