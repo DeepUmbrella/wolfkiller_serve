@@ -15,6 +15,16 @@ export class UsersService {
       where: { user_name },
     });
   }
+  async findUserByEmail(email: string) {
+    return await this.userinfoRepository.findOne({
+      where: { email },
+    });
+  }
+  async findUserByPhoneNumber(phone_number: string) {
+    return await this.userinfoRepository.findOne({
+      where: { phone_number },
+    });
+  }
   async createSingleUser(user_name: string) {
     return await this.userinfoRepository.findOne({
       where: { user_name },

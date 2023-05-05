@@ -38,10 +38,10 @@ export class SignUpDto {
   secend_password: string;
 
   @IsString()
-  nick_name: string;
+  user_name: string;
 
-  @IsString()
-  prefix: string;
+  @IsNumber({ maxDecimalPlaces: 2 })
+  prefix: number;
   @IsString()
   phone_number: string;
   @Equals(true)

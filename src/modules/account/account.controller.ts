@@ -9,6 +9,7 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { AccountService } from './account.service';
 import { AuthGuard } from '@guards/auth.guard';
 import { Response } from 'express';
@@ -45,7 +46,8 @@ export class AccountController {
   signUp(@Body(SignUpValidationPipe) signUpDto: SignUpDto) {
     this.accountService.signUp(signUpDto);
     return {
-      user_name: '6666',
+      message: '',
+      error_code: 0,
     };
   }
 

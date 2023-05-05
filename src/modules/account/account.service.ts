@@ -2,6 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignFailed } from 'src/constants';
+import { compare, genSalt, hashSync } from 'bcrypt';
+import { SignUpDto } from './account.dto';
 
 @Injectable()
 export class AccountService {
@@ -11,17 +13,20 @@ export class AccountService {
   ) {}
   async signIn(username: string, pass: string) {
     const user = await this.usersService.findUserByName(username);
-    if (user?.password !== pass) {
+    const match = await compare(pass, user.password);
+    const Salt = await genSalt(10);
+
+    if (!match) {
       throw new UnauthorizedException(SignFailed.RES, SignFailed.DES);
     }
 
-    const { password, id, ...result } = user;
-    const payload = { user_name: user.user_name, sub: id };
+    const { password, user_name, id, ...result } = user;
+    const payload = { user_name, sub: id };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
       user_data: {
-        user_name: result.user_name,
+        user_name: user_name,
         avatar_url: result.avatarUrl,
       },
     };
@@ -39,7 +44,8 @@ export class AccountService {
     };
   }
 
-  signUp(arg: any) {
+  signUp(createDto: SignUpDto) {
+    // const hash = hashSync(myPlaintextPassword, saltRounds);
     return 1;
   }
 }
