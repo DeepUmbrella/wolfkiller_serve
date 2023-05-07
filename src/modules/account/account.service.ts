@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignFailed } from 'src/constants';
@@ -13,9 +13,9 @@ export class AccountService {
   ) {}
   async signIn(username: string, pass: string) {
     const user = await this.usersService.findUserByName(username);
-    const match = await compare(pass, user.password);
-    const Salt = await genSalt(10);
 
+    console.log(pass, user.password);
+    const match = await compare(pass, user.password);
     if (!match) {
       throw new UnauthorizedException(SignFailed.RES, SignFailed.DES);
     }
@@ -44,8 +44,44 @@ export class AccountService {
     };
   }
 
-  signUp(createDto: SignUpDto) {
-    // const hash = hashSync(myPlaintextPassword, saltRounds);
-    return 1;
+  async signUp(createDto: SignUpDto) {
+    const {
+      user_name,
+      password = '123456',
+      email = '',
+      phone_number,
+      prefix,
+    } = createDto;
+
+    try {
+      const checkUserExist = await this.usersService.findUserByEmail(email);
+      if (checkUserExist) {
+        return {
+          error_code: 1,
+          message: `This email address : [${checkUserExist.email}] is already registered!`,
+        };
+      }
+      const hashPassword = hashSync(password, 10);
+
+      const createDtoResult = await this.usersService.createSingleUser({
+        user_name,
+        password: hashPassword,
+        email,
+        phone_number,
+        prefix,
+      });
+
+      return {
+        error_code: 0,
+        message: `Email: [${createDtoResult.email}] registration is successful, please log in with the registered email address`,
+      };
+    } catch (err) {
+      //todo enter error to log
+
+      return {
+        error_code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'The server is busy, please try again later',
+      };
+    }
   }
 }

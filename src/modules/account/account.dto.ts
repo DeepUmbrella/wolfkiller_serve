@@ -29,7 +29,7 @@ export class SignUpDto {
   @Length(4, 20)
   email: string;
 
-  @IsString()
+  @IsString({})
   @Length(6, 32)
   password: string;
 

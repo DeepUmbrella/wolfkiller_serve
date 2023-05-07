@@ -26,6 +26,7 @@ export class AccountController {
     @Body(SignInValidationPipe) signInDto: SignInDto,
     @Res({ passthrough: true }) res: Response,
   ) {
+    console.log(signInDto, 'signInDto');
     const result = await this.accountService.signIn(
       signInDto.user_name,
       signInDto.password,
@@ -43,11 +44,19 @@ export class AccountController {
   }
 
   @Post('register')
-  signUp(@Body(SignUpValidationPipe) signUpDto: SignUpDto) {
-    this.accountService.signUp(signUpDto);
+  async signUp(
+    @Body(SignUpValidationPipe) signUpDto: SignUpDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { error_code = 200, message } = await this.accountService.signUp(
+      signUpDto,
+    );
+
+    res.status(error_code < 200 ? 200 : error_code);
+
     return {
-      message: '',
-      error_code: 0,
+      message,
+      error_code,
     };
   }
 

@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
 } from 'typeorm';
+import { CreateUserDto } from '../dto/createUserDto';
 
 @Entity()
 export class Userinfo {
@@ -18,7 +19,7 @@ export class Userinfo {
 
   @Column({
     type: 'varchar',
-    length: 32,
+    length: 255,
     select: true,
     nullable: false,
     default: '123456',
