@@ -18,17 +18,20 @@ async function bootstrap() {
     }),
   );
   app.use(cookieParser());
-  // app.use(
-  //   session({
-  //     secret: 'linyan',
-  //     rolling: true,
-  //     name: '_auth',
-  //     cookie: {
-  //       httpOnly: false,
-  //       maxAge: 99999,
-  //     },
-  //   }),
-  // );
+  app.use(
+    session({
+      secret: process.env.CAPTCHA_SECRET || '123456',
+      rolling: true,
+      name: process.env.CAPTCHA_SESSION_KEY || 'captcha_session',
+      resave: false,
+      saveUninitialized: false,
+
+      cookie: {
+        httpOnly: true,
+        maxAge: Number.parseInt('300'),
+      },
+    }),
+  );
   await app.listen(3000);
 }
 bootstrap();

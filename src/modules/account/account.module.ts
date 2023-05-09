@@ -4,6 +4,7 @@ import { AccountController } from './account.controller';
 import { UsersModule } from '../users/users.module';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CaptchaService } from '../captcha/captcha.service';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [AccountService],
+  providers: [AccountService, CaptchaService],
   controllers: [AccountController],
   exports: [],
 })

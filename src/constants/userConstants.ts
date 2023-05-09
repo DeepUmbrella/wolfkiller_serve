@@ -19,3 +19,11 @@ export const SignFailed = {
   },
   DES: 'username or password incrrect!',
 };
+
+export const CaptchaFailed = {
+  RES: {
+    error_message: 'Captcha Code Incrrect!, please enter crrect code and try again!',
+    error_code: 1,
+  },
+  DES: 'Captcha Code incrrect!',
+};

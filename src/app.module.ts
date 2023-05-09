@@ -12,6 +12,8 @@ import {
 } from './config/configuration';
 import { LoggerMiddleware } from './common/middleware';
 import { AccountModule } from './modules/account/account.module';
+import { EmailModule } from './modules/email/email.module';
+import { CaptchaModule } from './modules/captcha/captcha.module';
 
 @Module({
   imports: [
@@ -49,6 +51,8 @@ import { AccountModule } from './modules/account/account.module';
       }),
     }),
     AccountModule,
+    EmailModule,
+    CaptchaModule,
   ],
   controllers: [],
   providers: [],
