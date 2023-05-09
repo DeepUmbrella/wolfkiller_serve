@@ -57,7 +57,7 @@ export class AccountService {
       const checkUserExist = await this.usersService.findUserByEmail(email);
       if (checkUserExist) {
         return {
-          error_code: 1,
+          error_code: 403,
           message: `This email address : [${checkUserExist.email}] is already registered!`,
         };
       }

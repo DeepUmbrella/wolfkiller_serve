@@ -1,3 +1,4 @@
+import { MaxFileSizeValidator } from '@nestjs/common';
 import {
   IsEmail,
   IsNotEmpty,
@@ -6,6 +7,8 @@ import {
   IsString,
   IsNumber,
   Equals,
+  Min,
+  Max,
 } from 'class-validator';
 
 export class SignInDto {
@@ -26,10 +29,10 @@ export class SignInDto {
 }
 export class SignUpDto {
   @IsEmail()
-  @Length(4, 20)
+  @Length(8, 20)
   email: string;
 
-  @IsString({})
+  @IsString()
   @Length(6, 32)
   password: string;
 
@@ -38,11 +41,15 @@ export class SignUpDto {
   secend_password: string;
 
   @IsString()
+  @Length(4, 32)
   user_name: string;
 
-  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsNumber({ maxDecimalPlaces: 0 })
+  @Min(0)
+  @Max(9)
   prefix: number;
   @IsString()
+  @Length(11, 11)
   phone_number: string;
   @Equals(true)
   agree_us: boolean;
