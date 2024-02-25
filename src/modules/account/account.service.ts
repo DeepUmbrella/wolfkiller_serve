@@ -2,20 +2,17 @@ import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignFailed } from 'src/constants';
-import { compare, genSalt, hashSync } from 'bcrypt';
+
 import { SignUpDto } from './account.dto';
 
 @Injectable()
 export class AccountService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private usersService: UsersService, private jwtService: JwtService) {}
   async signIn(username: string, pass: string) {
     const user = await this.usersService.findUserByName(username);
 
     console.log(pass, user.password);
-    const match = await compare(pass, user.password);
+    const match = pass === user.password;
     if (!match) {
       throw new UnauthorizedException(SignFailed.RES, SignFailed.DES);
     }
@@ -45,13 +42,7 @@ export class AccountService {
   }
 
   async signUp(createDto: SignUpDto) {
-    const {
-      user_name,
-      password = '123456',
-      email = '',
-      phone_number,
-      prefix,
-    } = createDto;
+    const { user_name, password = '123456', email = '', phone_number, prefix } = createDto;
 
     try {
       const checkUserExist = await this.usersService.findUserByEmail(email);
@@ -61,11 +52,10 @@ export class AccountService {
           message: `This email address : [${checkUserExist.email}] is already registered!`,
         };
       }
-      const hashPassword = hashSync(password, 10);
 
       const createDtoResult = await this.usersService.createSingleUser({
         user_name,
-        password: hashPassword,
+        password,
         email,
         phone_number,
         prefix,

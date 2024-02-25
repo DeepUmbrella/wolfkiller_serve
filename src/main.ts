@@ -28,7 +28,7 @@ async function bootstrap() {
 
       cookie: {
         httpOnly: true,
-        maxAge: Number.parseInt('300'),
+        maxAge: Number.parseInt('3000'),
       },
     }),
   );

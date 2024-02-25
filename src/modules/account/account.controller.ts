@@ -9,7 +9,7 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+
 import { AccountService } from './account.service';
 import { AuthGuard } from '@guards/auth.guard';
 import { CaptchaGuard } from '@guards/captcha.guard';
