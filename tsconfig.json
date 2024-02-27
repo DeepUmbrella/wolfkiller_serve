@@ -18,6 +18,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@types": ["src/types"],
+      "@entities/*": ["src/entities/*"],
       "@pipe": ["src/common/pipe"],
       "@decorators": ["src/common/decorators"],
       "@guards/*": ["src/common/guards/*"]
