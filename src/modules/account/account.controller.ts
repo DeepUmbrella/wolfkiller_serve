@@ -27,8 +27,7 @@ export class AccountController {
     @Body(SignInValidationPipe) signInDto: SignInDto,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log(signInDto, 'signInDto');
-    const result = await this.accountService.signIn(signInDto.user_name, signInDto.password);
+    const result = await this.accountService.signIn(signInDto.username, signInDto.password);
     res.cookie('auth', result.access_token, {
       maxAge: 15 * 60 * 1000,
       httpOnly: true,
@@ -37,7 +36,11 @@ export class AccountController {
     return {
       message: '',
       error_code: 0,
-      user_info: result.user_data,
+      code: 20000,
+      data: {
+        token: result.access_token,
+        name: result.user_data.user_name,
+      },
     };
   }
 
@@ -62,9 +65,21 @@ export class AccountController {
   async profile(@Req() req) {
     const result = await this.accountService.profile(req?.user?.user_name);
     return {
-      message: '',
-      error_code: 0,
-      user_info: result.user_data,
+      code: 20000,
+      data: {
+        ...result.user_data,
+        roles: ['admin'],
+        introduction: 'I am a super administrator',
+      },
+    };
+  }
+
+  @Post('logout')
+  async logout() {
+    //todo
+    return {
+      code: 20000,
+      data: 'success',
     };
   }
 }

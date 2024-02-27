@@ -14,18 +14,11 @@ import {
 export class SignInDto {
   @IsString()
   @Length(4, 20)
-  user_name: string;
+  username: string;
 
   @Length(8, 16)
   @IsString()
   password: string;
-  @IsBoolean()
-  remember: boolean;
-  @Equals(true)
-  agree_us: boolean;
-
-  @IsString()
-  safety_verify_code: string;
 }
 export class SignUpDto {
   @IsEmail()

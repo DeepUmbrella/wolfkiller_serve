@@ -6,7 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configuration, DataBaseConfig, jwtConfiguration } from './config/configuration';
 import { LoggerMiddleware } from './common/middleware';
 import { AccountModule } from './modules/account/account.module';
-
+import { MachineModule } from './modules/hhApp/machine/machine.module';
+import { HH_AccountModule } from './modules/hhApp/hh_account/hh_account.module';
 import { CaptchaModule } from './modules/captcha/captcha.module';
 
 @Module({
@@ -30,6 +31,8 @@ import { CaptchaModule } from './modules/captcha/captcha.module';
     }),
     AccountModule,
     CaptchaModule,
+    MachineModule,
+    HH_AccountModule,
   ],
   controllers: [],
   providers: [],

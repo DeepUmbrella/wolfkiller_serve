@@ -11,7 +11,6 @@ export class AccountService {
   async signIn(username: string, pass: string) {
     const user = await this.usersService.findUserByName(username);
 
-    console.log(pass, user.password);
     const match = pass === user.password;
     if (!match) {
       throw new UnauthorizedException(SignFailed.RES, SignFailed.DES);
@@ -35,8 +34,8 @@ export class AccountService {
     }
     return {
       user_data: {
-        user_name: user.user_name,
-        avatar_url: user.avatarUrl,
+        name: user.user_name,
+        avatar: user.avatarUrl,
       },
     };
   }

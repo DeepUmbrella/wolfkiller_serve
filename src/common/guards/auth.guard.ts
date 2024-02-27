@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { ALLOW_KEY } from '../decorators/auth.decorator';
@@ -41,6 +36,7 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token, {
         secret: this.configService.get('jwt_config').secret,
       });
+
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException(ExpiredCert.RES, ExpiredCert.DES);
@@ -49,6 +45,6 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeaderCookie(request: Request): string | undefined {
-    return request.cookies?.auth;
+    return request.query?.token as string;
   }
 }
