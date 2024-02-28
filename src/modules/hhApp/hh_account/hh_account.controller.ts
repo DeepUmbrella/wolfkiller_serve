@@ -22,4 +22,9 @@ export class HH_AccountController {
   ) {
     return await this.hh_accountService.Register(username, password, mac_id);
   }
+
+  @Get('hh_user_list')
+  async hh_app_user_list() {
+    return await this.hh_accountService.getAllUsers();
+  }
 }

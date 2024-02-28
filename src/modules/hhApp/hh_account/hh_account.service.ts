@@ -29,4 +29,9 @@ export class HH_AccountService {
 
     return { result: 'success', data: res };
   }
+
+  async getAllUsers() {
+    const users = await this.hh_accountRepository.find();
+    return { result: users, total: users.length };
+  }
 }
