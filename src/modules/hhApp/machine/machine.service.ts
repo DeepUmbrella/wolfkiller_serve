@@ -15,7 +15,7 @@ export class MachineService {
   ) {}
 
   async checkMachine(mac_id: string) {
-    return await this.machineRepository.findOne({ where: { mac_id } });
+    return await this.machineRepository.findOne({ where: { mac_id, enable: true } });
   }
 
   async updateMachineState(mac_id: string, enable: boolean) {
@@ -64,12 +64,16 @@ export class MachineService {
 
   async updateMachine(mac_id: string, apply_reason: 'apply' | 'reject') {
     if (apply_reason === 'apply') {
-      try {
-        const machine = new Machine();
-        machine.mac_id = mac_id;
-        machine.enable = true;
-        await this.machineRepository.insert(machine);
-      } catch (error) {}
+      if (await this.machineRepository.findOne({ where: { mac_id } })) {
+        this.machineRepository.update({ mac_id }, { enable: true });
+      } else {
+        try {
+          const machine = new Machine();
+          machine.mac_id = mac_id;
+          machine.enable = true;
+          await this.machineRepository.insert(machine);
+        } catch (error) {}
+      }
     }
     return this.applyMachine(mac_id);
   }
