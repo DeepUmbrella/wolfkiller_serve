@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { HH_AccountService } from './hh_account.service';
+import { AuthGuard } from '@guards/auth.guard';
 
 @Controller('/hh_app')
 export class HH_AccountController {
@@ -22,7 +23,7 @@ export class HH_AccountController {
   ) {
     return await this.hh_accountService.Register(username, password, mac_id);
   }
-
+  @UseGuards(AuthGuard)
   @Get('hh_user_list')
   async hh_app_user_list() {
     return await this.hh_accountService.getAllUsers();
