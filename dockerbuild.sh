@@ -14,7 +14,7 @@ docker stop hh-server
 echo "旧容器已停止."
 
 echo "删除旧容器..."
-doker rm hh-server
+docker rm hh-server
 echo "旧容器已删除."
 
 echo "运行新容器..."
