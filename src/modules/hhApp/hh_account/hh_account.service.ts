@@ -38,14 +38,14 @@ export class HH_AccountService {
     }
 
     const hh_user = new HH_User();
-    hh_user.enable = true;
+    hh_user.enable = false;
     hh_user.username = username;
     hh_user.password = password;
     hh_user.mac_id = mac_id;
 
     const res = await this.hh_accountRepository.save(hh_user);
 
-    return { result: 'success', data: res, message: '注册成功' };
+    return { result: 'success', data: res, message: '注册成功等待管理员审核...' };
   }
 
   async getAllUsers() {
