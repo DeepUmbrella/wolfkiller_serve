@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { MachineService } from './machine.service';
 
 @Controller('machine')
@@ -6,7 +6,11 @@ export class MachineController {
   constructor(private machineService: MachineService) {}
 
   @Get('get_permission')
-  async checkMachine(@Param('mac_id') mac_id: string) {
+  async checkMachine(@Query('mac_id') mac_id: string) {
+    if (!mac_id) {
+      return { result: 'fail' };
+    }
+
     const registered = await this.machineService.checkMachine(mac_id);
     return { result: registered ? 'success' : 'fail' };
   }
